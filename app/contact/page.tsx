@@ -1,0 +1,13 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowLeft, Check, Clock3, Mail, Send } from 'lucide-react';
+
+export default function ContactPage(){
+  return <main className="contactPage">
+    <header className="nav"><Link href="/" className="brand"><Image src="/logo.svg" alt="Today Film Makers" width={92} height={42}/></Link><Link className="navCta" href="/"><ArrowLeft size={15}/> Back home</Link></header>
+    <div className="contactShell">
+      <section className="contactIntro"><span className="eyebrow">START A BRAND PARTNERSHIP</span><h1>TELL US ABOUT <i>YOUR CAMPAIGN.</i></h1><p>Share your product, goals, timing and preferred collaboration format. We will review the fit and reply with the strongest campaign direction for Today Film Makers.</p><div className="contactPoints"><span><Check/> Filmmaking, camera, editing, software and AI brands</span><span><Clock3/> Typical reply within 1–2 business days</span><span><Mail/> hello@todayfilmmakers.com</span></div></section>
+      <form className="contactForm" action="mailto:hello@todayfilmmakers.com" method="post" encType="text/plain"><h2>Campaign inquiry</h2><div className="fieldGrid"><label>Your name<input name="name" required placeholder="Name"/></label><label>Company<input name="company" required placeholder="Brand or company"/></label><label>Work email<input name="email" type="email" required placeholder="you@company.com"/></label><label>Website<input name="website" type="url" placeholder="https://"/></label><label>Campaign format<select name="format" defaultValue=""><option value="" disabled>Select an option</option><option>Promotional video share</option><option>Custom content creation</option><option>Integrated feature</option><option>Long-term partnership</option><option>Not sure yet</option></select></label><label>Estimated budget<select name="budget" defaultValue=""><option value="" disabled>Select a range</option><option>$300–$600</option><option>$600–$1,500</option><option>$1,500–$3,000</option><option>$3,000+</option></select></label><label className="full">What are you promoting?<input name="product" required placeholder="Product, service or campaign"/></label><label className="full">Campaign details<textarea name="details" required placeholder="Tell us about your goals, deadline, deliverables and any usage requirements."/></label></div><button type="submit">Send campaign inquiry <Send size={15}/></button><p className="contactNote">This temporary form opens your email client. It can later be connected to Resend, Formspree or your preferred CRM.</p></form>
+    </div>
+  </main>
+}
