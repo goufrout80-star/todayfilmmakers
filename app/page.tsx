@@ -1,72 +1,56 @@
 'use client';
 
 import Image from 'next/image';
-import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
-import { ArrowDownRight, ArrowUpRight, BarChart3, Bookmark, Check, Eye, Instagram, Menu, Play, Sparkles, X } from 'lucide-react';
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring } from 'framer-motion';
+import { ArrowUpRight, BarChart3, Check, Film, Globe2, Instagram, Layers3, Menu, MousePointer2, Sparkles, Users, X } from 'lucide-react';
+import { MouseEvent, useState } from 'react';
 
-const tutorials = [
-  { title:'Light a cinematic portrait with one source', creator:'@creatorname', tag:'LIGHTING', views:'REAL DATA SOON', img:'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1800&q=90' },
-  { title:'The match-cut trick editors keep saving', creator:'@creatorname', tag:'EDITING', views:'REAL DATA SOON', img:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1800&q=90' },
-  { title:'Three camera moves that add emotion', creator:'@creatorname', tag:'CAMERA', views:'REAL DATA SOON', img:'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1800&q=90' },
-  { title:'Build atmosphere before adding music', creator:'@creatorname', tag:'SOUND', views:'REAL DATA SOON', img:'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1800&q=90' },
-];
-const categories=['Editing','Camera','Lighting','Color grading','VFX','Sound design','AI tools','Behind the scenes'];
+const metrics=[['332K+','Instagram followers'],['198K+','Facebook followers'],['12M+','Monthly views'],['8.4%','Engagement rate'],['190+','Countries reached'],['83%','Audience aged 18–34']];
 const formats=[
-  ['01','Dedicated tutorial','A complete educational concept built around a relevant product or creative workflow.'],
-  ['02','Integrated feature','A natural product demonstration inside content filmmakers already want to watch and save.'],
-  ['03','Multi-platform campaign','One strong idea adapted for the platforms where our filmmaking audience spends attention.'],
+  ['01','Promotional video share','Brand-supplied or approved creative distributed across the Today Film Makers network.'],
+  ['02','Custom content creation','A dedicated short-form concept produced around your product, workflow or campaign objective.'],
+  ['03','Integrated feature','Natural product placement inside educational or inspiration-led filmmaking content.'],
+  ['04','Long-term partnership','Recurring visibility, campaign planning and content support across multiple launches.']
 ];
-const reveal={hidden:{opacity:0,y:70},show:{opacity:1,y:0,transition:{duration:1,ease:[.16,1,.3,1]}}};
+const packages=[
+  {name:'Promotional Video Share',price:'Starting at $300',featured:false,items:['Cross-platform distribution','Caption adapted for our audience','Brand tag and campaign CTA','Performance summary after publishing']},
+  {name:'Custom Content Creation',price:'Starting at $600',featured:true,items:['Custom concept and creative direction','Production and editing included','Revision round before publishing','Cross-platform campaign support','Performance reporting']},
+  {name:'Custom Partnership',price:'Campaign quote',featured:false,items:['Multi-video campaign planning','Long-term brand integration','Priority production scheduling','Custom deliverables and usage terms']}
+];
+const reveal={hidden:{opacity:0,y:48},show:{opacity:1,y:0,transition:{duration:.85,ease:[.16,1,.3,1]}}};
 
 function MagneticLink({children,href,className=''}:{children:React.ReactNode;href:string;className?:string}){
   const x=useMotionValue(0),y=useMotionValue(0);const sx=useSpring(x,{stiffness:190,damping:16}),sy=useSpring(y,{stiffness:190,damping:16});
-  const move=(e:MouseEvent<HTMLAnchorElement>)=>{const r=e.currentTarget.getBoundingClientRect();x.set((e.clientX-r.left-r.width/2)*.18);y.set((e.clientY-r.top-r.height/2)*.18)};
+  const move=(e:MouseEvent<HTMLAnchorElement>)=>{const r=e.currentTarget.getBoundingClientRect();x.set((e.clientX-r.left-r.width/2)*.16);y.set((e.clientY-r.top-r.height/2)*.16)};
   return <motion.a href={href} className={className} style={{x:sx,y:sy}} onMouseMove={move} onMouseLeave={()=>{x.set(0);y.set(0)}}>{children}</motion.a>
 }
 
 export default function Home(){
-  const [open,setOpen]=useState(false),[loaded,setLoaded]=useState(false);
-  const heroRef=useRef<HTMLElement>(null),storyRef=useRef<HTMLElement>(null);
-  useEffect(()=>{const t=setTimeout(()=>setLoaded(true),2100);return()=>clearTimeout(t)},[]);
-  const mouseX=useMotionValue(50),mouseY=useMotionValue(50);
-  const glow=useMotionTemplate`radial-gradient(680px circle at ${mouseX}% ${mouseY}%, rgba(244,201,0,.18), transparent 62%)`;
-  const {scrollYProgress}=useScroll();
-  const {scrollYProgress:heroP}=useScroll({target:heroRef,offset:['start start','end start']});
-  const {scrollYProgress:storyP}=useScroll({target:storyRef,offset:['start start','end end']});
-  const heroY=useTransform(heroP,[0,1],['0%','22%']),heroScale=useTransform(heroP,[0,1],[1,1.16]),heroOpacity=useTransform(heroP,[0,.78],[1,.05]);
-  const railX=useTransform(storyP,[0,1],['0%','-74%']);
-
+  const [open,setOpen]=useState(false);const mouseX=useMotionValue(50),mouseY=useMotionValue(50);const {scrollYProgress}=useScroll();
+  const glow=useMotionTemplate`radial-gradient(620px circle at ${mouseX}% ${mouseY}%, rgba(244,201,0,.16), transparent 62%)`;
   return <main onMouseMove={e=>{mouseX.set((e.clientX/window.innerWidth)*100);mouseY.set((e.clientY/window.innerHeight)*100)}}>
-    <AnimatePresence>{!loaded&&<motion.div className="loader" exit={{y:'-100%'}} transition={{duration:.9,ease:[.76,0,.24,1]}}><div className="loaderMark"><span>{'{'}</span><b>TFM</b><span>{'}'}</span></div><div className="loaderLine"><motion.i initial={{scaleX:0}} animate={{scaleX:1}} transition={{duration:1.7,ease:[.16,1,.3,1]}}/></div><p>CURATING THE NEXT FRAME</p></motion.div>}</AnimatePresence>
     <div className="grain"/><motion.div className="ambientGlow" style={{background:glow}}/><motion.div className="progress" style={{scaleX:scrollYProgress}}/>
+    <header className="nav"><a href="#top" className="brand"><Image src="/logo.svg" alt="Today Film Makers" width={92} height={42}/></a><nav>{['Audience','Formats','Performance','Packages'].map(x=><a href={'#'+x.toLowerCase()} key={x}>{x}</a>)}</nav><MagneticLink className="navCta" href="/contact">Start a campaign <ArrowUpRight size={15}/></MagneticLink><button className="menu" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></header>
+    {open&&<div className="mobileNav">{['Audience','Formats','Performance','Packages'].map(x=><a key={x} href={'#'+x.toLowerCase()} onClick={()=>setOpen(false)}>{x}<ArrowUpRight/></a>)}<a href="/contact">Contact <ArrowUpRight/></a></div>}
 
-    <header className="nav"><a className="brand" href="#top"><Image src="/logo.svg" alt="Today Film Makers" width={88} height={40}/></a><nav>{['Tutorials','Skills','Community','Brands'].map(x=><a key={x} href={'#'+x.toLowerCase()}>{x}</a>)}</nav><MagneticLink className="navCta" href="#brands">Partner with us <ArrowUpRight size={15}/></MagneticLink><button className="menu" onClick={()=>setOpen(!open)} aria-label="Menu">{open?<X/>:<Menu/>}</button></header>
-    {open&&<motion.div className="mobileNav" initial={{clipPath:'inset(0 0 100% 0)'}} animate={{clipPath:'inset(0 0 0 0)'}}>{['Tutorials','Skills','Community','Brands'].map((x,i)=><motion.a key={x} href={'#'+x.toLowerCase()} initial={{opacity:0,y:35}} animate={{opacity:1,y:0}} transition={{delay:.08*i}} onClick={()=>setOpen(false)}><span>0{i+1}</span>{x}<ArrowUpRight/></motion.a>)}</motion.div>}
+    <section className="dealHero" id="top">
+      <div className="heroGrid"/>
+      <motion.div className="dealHeroCopy" initial="hidden" animate="show" variants={reveal}><span className="eyebrow">TODAY FILM MAKERS — BRAND PARTNERSHIPS</span><h1>WHERE FILMMAKING BRANDS MEET A <i>GLOBAL CREATIVE AUDIENCE.</i></h1><p>We help filmmaking, camera, editing, software and AI brands reach an engaged community through credible short-form campaigns built for attention and trust.</p><div className="heroActions"><MagneticLink href="/contact" className="primaryBtn">Partner with us <ArrowUpRight/></MagneticLink><a className="ghostBtn" href="#audience">View media kit</a></div></motion.div>
+      <motion.div className="heroDevice" initial={{opacity:0,x:70,rotate:4}} animate={{opacity:1,x:0,rotate:0}} transition={{duration:1.1,delay:.2,ease:[.16,1,.3,1]}}><div className="deviceTop"><span>TFM CAMPAIGN</span><span>● LIVE</span></div><Image fill src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=90" alt="Filmmaking campaign preview"/><div className="floatingTag one">12M+ monthly views</div><div className="floatingTag two">332K+ Instagram</div><div className="floatingTag three">Brand-ready content</div></motion.div>
+      <div className="brandTicker"><span>CAMERA</span><span>EDITING</span><span>AI TOOLS</span><span>FILMMAKING</span><span>SOFTWARE</span><span>GEAR</span><span>CREATIVE TECH</span></div>
+    </section>
 
-    <motion.section id="top" className="hero" ref={heroRef} style={{opacity:heroOpacity}}>
-      <motion.div className="heroMedia" style={{y:heroY,scale:heroScale}}><Image fill priority src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=2400&q=92" alt="Filmmaking tutorial community"/><div className="shade"/></motion.div>
-      <div className="cameraFrame"><span className="rec">● REC</span><span>CURATED DAILY</span><span>9:16 / SOCIAL FIRST</span><span>TFM / 2026</span></div>
-      <motion.div className="heroCopy" initial={{opacity:0}} animate={loaded?{opacity:1}:{}} transition={{duration:.6}}>
-        <motion.span initial={{y:25,opacity:0}} animate={loaded?{y:0,opacity:1}:{}} transition={{delay:.15}}>FILMMAKING EDUCATION, CURATED FOR THE FEED</motion.span>
-        <h1><motion.b initial={{y:'110%'}} animate={loaded?{y:0}:{}} transition={{delay:.2,duration:1,ease:[.16,1,.3,1]}}>LEARN</motion.b><br/><motion.em initial={{y:'110%'}} animate={loaded?{y:0}:{}} transition={{delay:.32,duration:1,ease:[.16,1,.3,1]}}>FROM THE BEST.</motion.em></h1>
-        <div className="heroBottom"><p>We discover, credit and share filmmaking tutorials worth saving.</p><MagneticLink href="#tutorials" className="heroPlay"><Play fill="currentColor"/> Explore tutorials</MagneticLink></div>
-      </motion.div>
-      <a href="#purpose" className="scrollCue">SCROLL TO LEARN <ArrowDownRight/></a>
-    </motion.section>
+    <section className="mediaSection" id="audience"><div className="sectionIntro"><span className="eyebrow">01 — THE AUDIENCE</span><h2>A CREATIVE COMMUNITY BUILT FOR <i>RELEVANT BRANDS.</i></h2><p>Temporary presentation data is shown below and will be replaced with your verified social analytics.</p></div><div className="metricGrid">{metrics.map(([v,l])=><motion.div key={l} initial="hidden" whileInView="show" viewport={{once:true}} variants={reveal}><strong>{v}</strong><span>{l}</span><small>Placeholder data</small></motion.div>)}</div><div className="insightGrid"><div><h3>Audience breakdown</h3><div className="bars"><span><b>18–24</b><i style={{width:'78%'}}/></span><span><b>25–34</b><i style={{width:'88%'}}/></span><span><b>35–44</b><i style={{width:'38%'}}/></span></div></div><div><h3>Top audience interests</h3><div className="interestTags"><span>Filmmaking</span><span>Editing</span><span>Cameras</span><span>Color grading</span><span>AI tools</span><span>Creative software</span></div></div></div></section>
 
-    <section className="purpose" id="purpose"><span className="eyebrow">01 — THE REAL TFM</span><motion.p initial="hidden" whileInView="show" viewport={{once:true,amount:.25}} variants={reveal}>Not a production studio. Not a traditional magazine. <i>Today Film Makers is a curated filmmaking classroom</i> built from the best short-form tutorials across the creative community.</motion.p><div className="purposeRail"><span>WE DISCOVER</span><span>WE CURATE</span><span>WE CREDIT</span><span>WE EDUCATE</span></div></section>
+    <section className="formatsSection" id="formats"><div className="sectionIntro"><span className="eyebrow">02 — CONTENT FORMATS</span><h2>FOUR WAYS TO PUT YOUR BRAND <i>IN FRONT OF FILMMAKERS.</i></h2></div><div className="formatCards">{formats.map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p><ArrowUpRight/></article>)}</div></section>
 
-    <section className="tutorials" id="tutorials"><div className="sectionHead"><div><span className="eyebrow">02 — CURATED NOW</span><h2>TUTORIALS<br/>WORTH <i>SAVING.</i></h2></div><p>Real creator posts, performance data and links will replace these presentation placeholders.</p></div><div className="tutorialGrid">{tutorials.map((t,i)=><motion.article key={t.title} className="tutorialCard" initial="hidden" whileInView="show" viewport={{once:true,amount:.15}} variants={reveal} whileHover="hover"><div className="tutorialImage"><Image fill src={t.img} alt={t.title}/><motion.div className="cardCurtain" variants={{hover:{scaleY:0}}}/><span className="cardIndex">0{i+1}</span><span className="cardTag">{t.tag}</span><motion.div className="cardPlay" variants={{hover:{scale:1,opacity:1}}}><Play fill="currentColor"/></motion.div></div><div className="tutorialInfo"><p>{t.creator}</p><h3>{t.title}</h3><div><span><Eye size={13}/>{t.views}</span><span><Bookmark size={13}/>SAVE</span></div></div></motion.article>)}</div></section>
+    <section className="performance" id="performance"><div className="performanceVisual"><Image fill src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1600&q=90" alt="Campaign case study"/><span className="caseLabel">SAMPLE CAMPAIGN</span></div><div className="performanceCopy"><span className="eyebrow">03 — CAMPAIGN PERFORMANCE</span><h2>BUILT TO BE SEEN, <i>UNDERSTOOD AND REMEMBERED.</i></h2><p>Campaign content is structured around clear product value, strong visual hooks and native storytelling for filmmakers.</p><div className="caseStats"><div><strong>1.35M+</strong><span>Views</span></div><div><strong>95K</strong><span>Reach</span></div><div><strong>47K</strong><span>Interactions</span></div><div><strong>8.6K</strong><span>Saves</span></div></div><small>Sample values until verified campaign results are supplied.</small></div></section>
 
-    <section className="skills" id="skills"><div className="skillsSticky"><span className="eyebrow">03 — FIND YOUR NEXT SKILL</span><h2>EVERYTHING<br/>YOU WANT TO<br/><i>LEARN NEXT.</i></h2></div><div className="skillList">{categories.map((c,i)=><a href="#tutorials" key={c}><span>0{i+1}</span><strong>{c}</strong><ArrowUpRight/></a>)}</div></section>
+    <section className="whyBrands"><div className="sectionIntro centered"><span className="eyebrow">WHY BRANDS CHOOSE TFM</span><h2>WE MAKE CREATIVE PRODUCTS FEEL <i>VALUABLE.</i></h2></div><div className="reasonGrid"><div><Sparkles/><h3>Audience fit first</h3><p>We only position products that genuinely make sense for filmmakers and creative professionals.</p></div><div><Film/><h3>Native storytelling</h3><p>Campaigns are shaped like content people choose to watch—not ads they try to skip.</p></div><div><BarChart3/><h3>Clear reporting</h3><p>Brands receive measurable performance data covering views, reach and engagement.</p></div></div></section>
 
-    <section className="story" ref={storyRef}><div className="storySticky"><motion.div className="storyRail" style={{x:railX}}><article className="storyIntro"><span className="eyebrow">HOW THE PAGE WORKS</span><h2>FROM THE<br/>ENDLESS FEED<br/>TO <i>REAL VALUE.</i></h2></article>{[['01','DISCOVER','We scan the filmmaking community for techniques, workflows and ideas worth attention.'],['02','VERIFY','We check usefulness, clarity and relevance before a tutorial earns a place on the page.'],['03','CREDIT','The original creator stays visible. Their work is the reason the community learns.'],['04','SHARE','The best tutorials reach more filmmakers through a trusted educational feed.']].map(x=><article className="storyCard" key={x[0]}><span>{x[0]}</span><h3>{x[1]}</h3><p>{x[2]}</p><div className="pixelBracket">{'{ }'}</div></article>)}</motion.div></div></section>
+    <section className="packages" id="packages"><div className="sectionIntro centered"><span className="eyebrow">04 — COLLABORATION OPTIONS</span><h2>CHOOSE THE FORMAT THAT FITS <i>YOUR CAMPAIGN.</i></h2></div><div className="packageGrid">{packages.map(p=><article className={p.featured?'featured':''} key={p.name}>{p.featured&&<span className="popular">MOST POPULAR</span>}<h3>{p.name}</h3><strong>{p.price}</strong><ul>{p.items.map(x=><li key={x}><Check/>{x}</li>)}</ul><a href="/contact">Start a campaign <ArrowUpRight/></a></article>)}</div></section>
 
-    <section className="community" id="community"><div className="communityHead"><div><span className="eyebrow">04 — VERIFIED COMMUNITY PROOF</span><h2>REAL NUMBERS.<br/><i>COMING NEXT.</i></h2></div><p>When you send the social insights, this section becomes a live proof system for followers, views, reach, saves, countries and audience demographics.</p></div><div className="statsGrid">{['Community size','Monthly views','Monthly reach','Engagement rate'].map(x=><div key={x}><strong>—</strong><h3>{x}</h3><p>Awaiting verified TFM analytics</p></div>)}</div><div className="audienceRibbon"><span>FILMMAKERS</span><span>EDITORS</span><span>CREATORS</span><span>STUDENTS</span><span>FREELANCERS</span><span>CREATIVE TEAMS</span></div></section>
-
-    <section className="brands" id="brands"><div className="brandsHero"><span className="eyebrow">05 — FOR BRANDS</span><h2>DON&apos;T INTERRUPT<br/>FILMMAKERS.<br/><i>TEACH THEM.</i></h2><p>We turn relevant products into educational stories the filmmaking community can actually use, remember and save.</p></div><div className="brandValues"><div><Sparkles/><span>01</span><h3>Education first</h3><p>The product enters through a useful workflow, result or technique.</p></div><div><Instagram/><span>02</span><h3>Native to the feed</h3><p>Creative shaped for short-form platforms and filmmaking audiences.</p></div><div><BarChart3/><span>03</span><h3>Verified reporting</h3><p>Views, reach, saves and engagement presented with real campaign data.</p></div></div><div className="formats"><div className="formatsHead"><span className="eyebrow">CAMPAIGN FORMATS</span><h2>BUILT TO<br/><i>PERFORM.</i></h2></div><div className="formatGrid">{formats.map(f=><article key={f[0]}><span>{f[0]}</span><h3>{f[1]}</h3><p>{f[2]}</p><ArrowUpRight/></article>)}</div></div><div className="brandCta"><span className="eyebrow">READY FOR THE RIGHT PARTNER</span><h2>YOUR PRODUCT.<br/>A USEFUL STORY.<br/><i>THE RIGHT AUDIENCE.</i></h2><MagneticLink href="mailto:hello@todayfilmmakers.com" className="ctaCircle">REQUEST MEDIA KIT <ArrowUpRight/></MagneticLink></div></section>
-
-    <footer><div className="footerTop"><Image src="/logo.svg" alt="Today Film Makers" width={128} height={58}/><h2>LEARN TODAY.<br/>CREATE TOMORROW.</h2></div><div className="footerBottom"><span>© 2026 TODAY FILM MAKERS</span><div><a href="#">INSTAGRAM</a><a href="#">FACEBOOK</a><a href="#">YOUTUBE</a></div><a href="#top">BACK TO TOP ↑</a></div></footer>
+    <section className="finalDealCta"><span className="eyebrow">LET&apos;S BUILD THE RIGHT CAMPAIGN</span><h2>TELL US ABOUT<br/>YOUR PRODUCT.</h2><p>Share your goals, timing and preferred campaign format. We&apos;ll respond with the best way to work together.</p><MagneticLink href="/contact" className="ctaCircle">CONTACT TFM <ArrowUpRight/></MagneticLink></section>
+    <footer><div><Image src="/logo.svg" alt="Today Film Makers" width={110} height={50}/><span>Brand partnerships for the filmmaking industry.</span></div><div><span>© 2026 TODAY FILM MAKERS</span><a href="/contact">CONTACT</a><a href="#top">BACK TO TOP ↑</a></div></footer>
   </main>
 }
