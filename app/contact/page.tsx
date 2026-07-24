@@ -41,7 +41,13 @@ export default function ContactPage() {
 
   return <main className="contactPage">
     <div className="grain" />
-    <header className="contactNav"><a href="/"><Image src="/logo.svg" width={92} height={42} alt="Today Film Makers" /></a><a href="/"><ArrowLeft size={15} /> Back to media kit</a></header>
+    <header className="contactNav">
+      <a className="contactBrand" href="/" aria-label="Today Film Makers home">
+        <Image src="/logo.svg" width={86} height={38} alt="Today Film Makers" priority />
+        <span><i /> CAMPAIGN DESK</span>
+      </a>
+      <a className="contactBack" href="/"><i><ArrowLeft size={15} /></i><span>Back to media kit</span></a>
+    </header>
 
     <section className="contactHero"><motion.div initial={{ opacity: 0, y: 42 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [.16, 1, .3, 1] }}><span className="eyebrow">BRAND PARTNERSHIP INQUIRY</span><h1>LET&apos;S BUILD A CAMPAIGN<br />FILMMAKERS WILL <i>REMEMBER.</i></h1><p>Tell us what you&apos;re launching, who you want to reach and which collaboration format interests you. We&apos;ll review the brief and reply with the strongest next step.</p></motion.div></section>
 
