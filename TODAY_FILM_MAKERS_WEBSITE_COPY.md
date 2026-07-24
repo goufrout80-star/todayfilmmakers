@@ -36,6 +36,37 @@ The website must never present unverified campaign data, demo labels or placehol
 
 ---
 
+# Navigation and Craft Rail
+
+## Navigation Direction
+
+- Use a fixed cinematic navigation frame instead of a generic centered pill
+- Keep the logo and a small live-status cue on the left
+- Number the four homepage links from 01 to 04
+- Use a controlled vertical type roll on hover
+- Show the currently visible section with a yellow underline
+- Compress the frame slightly after the visitor starts scrolling
+- Use a split yellow campaign CTA with an arrow cell
+- On mobile, open a full-screen yellow navigation composition with oversized editorial links
+- Maintain keyboard support, an Escape-to-close interaction and visible menu state
+
+## Craft Rail Direction
+
+- Replace the thin yellow category ticker with a taller editorial rail
+- Use two layers: small metadata above and oversized moving category pairs below
+- Pair every category with a short craft-focused phrase:
+  - Cameras / Frame the world
+  - Editing / Shape the story
+  - AI tools / Build new workflows
+  - Lighting / Control the mood
+  - Audio / Capture the moment
+  - Creative tech / Move the craft forward
+- Use a mathematically seamless duplicated loop so no cropped or empty edge appears
+- Pause the movement on hover and rotate the circular separators
+- Keep the rail fully legible on mobile and disable continuous movement for reduced-motion users
+
+---
+
 # Hero
 
 ## Eyebrow
@@ -197,55 +228,56 @@ Tags:
 
 # 03 - Campaign Proof
 
-## Main Headline
+## Section Label
 
-BUILT LIKE A FILM.  
-SHAPED FOR THE FEED.
+03 - CAMPAIGN PROOF
 
-## Supporting Copy
+## Core Idea
 
-Every campaign moves through four deliberate beats. The result is a product story that feels cinematic, useful and native to the filmmaking community.
+ONE IDEA, CUT WITH INTENTION.
 
-## Creative System
+The section turns one wide cinematic frame into a vertical social frame as the visitor scrolls. This transformation communicates the campaign value in one gesture, without imitating editing software or adding decorative controls.
 
-### 01 - The Hook
+## Frame One
 
-Stop the scroll.
+Eyebrow:
 
-Open with an idea that earns the first second.
+THE RAW MATERIAL
 
-### 02 - The Product
+Headline:
 
-Show the value.
+A PRODUCT WITH FEATURES.
 
-Put the product inside a real filmmaker workflow.
+Supporting line:
 
-### 03 - The Payoff
+We find the reason to care.
 
-Make it useful.
+## Frame Two
 
-Turn features into a result the audience understands.
+Eyebrow:
 
-### 04 - The Action
+THE TFM CUT
 
-Move the viewer.
+Headline:
 
-Finish with one clear reason to explore the brand.
+A STORY WORTH WATCHING.
+
+Supporting line:
+
+We cut it for attention.
 
 ## Motion Design Direction
 
 - Do not use video
 - Do not use photography
-- Build a pure motion-design graphic inspired by filmmaking tools
-- Use a cinematic focus reticle
-- Use animated framing corners
-- Use timecode and live-composition labels
-- Use four changing story frames
-- Use an edit timeline with four clips
-- Use a moving playhead
-- Use a responsive audio waveform
-- Allow the visitor to select any of the four campaign beats
-- Keep all numbers conceptual to the four-step story system, not fake campaign performance
+- Avoid mock editing software, timelines, waveforms, selectors, fake timecodes and technical decoration
+- Use one sticky, scroll-driven composition
+- Begin with a wide 16:9 yellow frame and transform it into a 9:16 vertical frame
+- Use one hard black cut between the two messages
+- Move oversized outlined words behind the frame: HOOK, STORY and ACTION
+- Keep the section mostly black with the cinematic yellow frame as the only strong accent
+- Keep the language short, editorial and confident
+- The motion must work on desktop and mobile, with a wider final frame on smaller screens
 
 ---
 
