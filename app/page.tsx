@@ -65,13 +65,6 @@ const formats = [
   },
 ];
 
-const proofFrames = [
-  { code: '01', label: 'THE HOOK', title: 'STOP', accent: 'THE SCROLL', copy: 'Open with an idea that earns the first second.' },
-  { code: '02', label: 'THE PRODUCT', title: 'SHOW', accent: 'THE VALUE', copy: 'Put the product inside a real filmmaker workflow.' },
-  { code: '03', label: 'THE PAYOFF', title: 'MAKE IT', accent: 'USEFUL', copy: 'Turn features into a result the audience understands.' },
-  { code: '04', label: 'THE ACTION', title: 'MOVE', accent: 'THE VIEWER', copy: 'Finish with one clear reason to explore the brand.' },
-];
-
 const whyReasons = [
   {
     title: 'Focused audience',
@@ -136,6 +129,22 @@ const processSteps = [
   { n: '04', label: 'Release', title: 'We publish and report.', text: 'The campaign goes live across the agreed channels, followed by clear performance reporting.' },
 ];
 
+const navigationItems = [
+  { number: '01', label: 'Audience', href: '#audience', section: 'audience' },
+  { number: '02', label: 'Formats', href: '#formats', section: 'formats' },
+  { number: '03', label: 'Proof', href: '#results', section: 'results' },
+  { number: '04', label: 'Options', href: '#packages', section: 'packages' },
+];
+
+const craftTopics = [
+  { title: 'Cameras', note: 'Frame the world' },
+  { title: 'Editing', note: 'Shape the story' },
+  { title: 'AI tools', note: 'Build new workflows' },
+  { title: 'Lighting', note: 'Control the mood' },
+  { title: 'Audio', note: 'Capture the moment' },
+  { title: 'Creative tech', note: 'Move the craft forward' },
+];
+
 const reveal = {
   hidden: { opacity: 0, y: 54 },
   show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },
@@ -178,144 +187,91 @@ function MagneticLink({
 }
 
 function CampaignProof() {
-  const [activeFrame, setActiveFrame] = useState(0);
+  const proofRef = useRef<HTMLElement>(null);
+  const [compact, setCompact] = useState(false);
+  const { scrollYProgress } = useScroll({
+    target: proofRef,
+    offset: ['start start', 'end end'],
+  });
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveFrame((current) => (current + 1) % proofFrames.length);
-    }, 2200);
-    return () => window.clearInterval(timer);
+    const media = window.matchMedia('(max-width: 900px)');
+    const sync = () => setCompact(media.matches);
+    sync();
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
   }, []);
 
-  const frame = proofFrames[activeFrame];
+  const frameWidth = useTransform(
+    scrollYProgress,
+    [0.08, 0.7],
+    compact ? ['86vw', '70vw'] : ['82vw', '28vw'],
+  );
+  const frameRatio = useTransform(scrollYProgress, [0.08, 0.7], [16 / 9, 9 / 16]);
+  const railX = useTransform(scrollYProgress, [0, 1], compact ? ['5%', '-48%'] : ['18%', '-28%']);
+  const beforeOpacity = useTransform(scrollYProgress, [0, 0.42, 0.48], [1, 1, 0]);
+  const beforeY = useTransform(scrollYProgress, [0, 0.46], ['0%', '-12%']);
+  const afterOpacity = useTransform(scrollYProgress, [0.46, 0.56, 1], [0, 1, 1]);
+  const afterY = useTransform(scrollYProgress, [0.46, 0.62], ['16%', '0%']);
+  const cutScale = useTransform(scrollYProgress, [0.42, 0.49, 0.56], [0, 1, 0]);
+  const accentScale = useTransform(scrollYProgress, [0.45, 0.76], [0.15, 1]);
+  const wideOpacity = useTransform(scrollYProgress, [0.12, 0.43], [1, 0]);
+  const verticalOpacity = useTransform(scrollYProgress, [0.5, 0.72], [0, 1]);
+  const firstNoteOpacity = useTransform(scrollYProgress, [0.08, 0.42], [1, 0]);
+  const secondNoteOpacity = useTransform(scrollYProgress, [0.48, 0.7], [0, 1]);
 
   return (
-    <section className="resultsSection" id="results">
-      <div className="pageShell proofShell">
-        <motion.div
-          className="sectionIntro compact light"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={reveal}
-        >
-          <span className="eyebrow">03 — CAMPAIGN PROOF</span>
-          <h2>
-            Built like a film.
-            <br />
-            <i>Shaped for the feed.</i>
-          </h2>
-          <p>
-            Every campaign moves through four deliberate beats. The result is a product story that feels cinematic,
-            useful and native to the filmmaking community.
-          </p>
+    <section className="resultsSection" id="results" ref={proofRef}>
+      <div className="proofSticky">
+        <div className="proofTopline">
+          <span>03 — CAMPAIGN PROOF</span>
+          <span>ONE IDEA, CUT WITH INTENTION</span>
+        </div>
+
+        <motion.div className="proofWordRail" style={{ x: railX }} aria-hidden="true">
+          <span>HOOK</span>
+          <i />
+          <span>STORY</span>
+          <i />
+          <span>ACTION</span>
+          <i />
+          <span>HOOK</span>
         </motion.div>
 
-        <div className="proofExperience">
-          <div className="proofNarrative">
-            <span>THE TFM STORY SYSTEM</span>
-            <h3>One product.<br />Four decisive frames.</h3>
-            <p>
-              We do not drop a logo into a generic edit. We build the hook, context, payoff and action as one clear
-              visual sequence.
-            </p>
-            <div className="proofSelectors" aria-label="Campaign story stages">
-              {proofFrames.map((item, index) => (
-                <button
-                  key={item.code}
-                  className={activeFrame === index ? 'active' : ''}
-                  onClick={() => setActiveFrame(index)}
-                  aria-label={`Show ${item.label.toLowerCase()} frame`}
-                >
-                  <span>{item.code}</span>
-                  <i />
-                  <b>{item.label}</b>
-                </button>
-              ))}
-            </div>
-          </div>
+        <motion.div className="proofCinemaFrame" style={{ width: frameWidth, aspectRatio: frameRatio }}>
+          <motion.div className="proofFrameAccent" style={{ scaleY: accentScale }} />
+          <motion.div className="proofCut" style={{ scaleX: cutScale }} />
 
-          <motion.div
-            className="motionMonitor"
-            initial={{ opacity: 0, scale: 0.94, rotateX: 5 }}
-            whileInView={{ opacity: 1, scale: 1, rotateX: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="monitorChrome">
-              <span>TFM / CAMPAIGN COMPOSER</span>
-              <span>9:16 → SOCIAL</span>
-            </div>
-            <div className="motionCanvas">
-              <div className="filmPerforation top">
-                {Array.from({ length: 12 }).map((_, index) => <i key={index} />)}
-              </div>
-              <div className="filmPerforation bottom">
-                {Array.from({ length: 12 }).map((_, index) => <i key={index} />)}
-              </div>
-              <motion.div
-                className="focusRing focusRingOuter"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-              />
-              <motion.div
-                className="focusRing focusRingInner"
-                animate={{ rotate: -360, scale: [0.92, 1.04, 0.92] }}
-                transition={{ rotate: { duration: 12, repeat: Infinity, ease: 'linear' }, scale: { duration: 3.8, repeat: Infinity } }}
-              />
-              <div className="frameCorners"><i /><i /><i /><i /></div>
-              <span className="canvasTimecode">00:00:0{activeFrame + 1}:12</span>
-              <span className="canvasRec"><i /> LIVE COMPOSITION</span>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  className="proofFrame"
-                  key={frame.code}
-                  initial={{ opacity: 0, y: 34, filter: 'blur(12px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -26, filter: 'blur(10px)' }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <span>{frame.label}</span>
-                  <strong>{frame.title}</strong>
-                  <em>{frame.accent}</em>
-                  <p>{frame.copy}</p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <div className="editTimeline">
-              <div className="timelineMeta">
-                <span>STORY TRACK 01</span>
-                <span>00:08</span>
-              </div>
-              <div className="timelineTracks">
-                {proofFrames.map((item, index) => (
-                  <button
-                    key={item.code}
-                    className={activeFrame === index ? 'active' : ''}
-                    onClick={() => setActiveFrame(index)}
-                  >
-                    <span>{item.code}</span>
-                    <b>{item.label.replace('THE ', '')}</b>
-                  </button>
-                ))}
-                <motion.i
-                  className="timelinePlayhead"
-                  animate={{ left: ['1%', '99%'] }}
-                  transition={{ duration: 8.8, repeat: Infinity, ease: 'linear' }}
-                />
-              </div>
-              <div className="audioWave" aria-hidden="true">
-                {Array.from({ length: 42 }).map((_, index) => (
-                  <motion.i
-                    key={index}
-                    animate={{ scaleY: [0.25, 0.45 + ((index * 7) % 10) / 10, 0.25] }}
-                    transition={{ duration: 0.8 + (index % 5) * 0.1, repeat: Infinity, delay: index * 0.025 }}
-                  />
-                ))}
-              </div>
-            </div>
+          <motion.div className="proofFrameMessage proofFrameBefore" style={{ opacity: beforeOpacity, y: beforeY }}>
+            <span>THE RAW MATERIAL</span>
+            <strong>
+              A PRODUCT
+              <br />
+              WITH FEATURES.
+            </strong>
           </motion.div>
+
+          <motion.div className="proofFrameMessage proofFrameAfter" style={{ opacity: afterOpacity, y: afterY }}>
+            <span>THE TFM CUT</span>
+            <strong>
+              A STORY
+              <br />
+              <em>WORTH WATCHING.</em>
+            </strong>
+          </motion.div>
+
+          <div className="proofFrameMeta">
+            <motion.span style={{ opacity: wideOpacity }}>WIDE IDEA / 16:9</motion.span>
+            <motion.span style={{ opacity: verticalOpacity }}>VERTICAL IMPACT / 9:16</motion.span>
+          </div>
+        </motion.div>
+
+        <div className="proofBottomline">
+          <div>
+            <motion.p style={{ opacity: firstNoteOpacity }}>We find the reason to care.</motion.p>
+            <motion.p style={{ opacity: secondNoteOpacity }}>We cut it for attention.</motion.p>
+          </div>
+          <span>SCROLL TO MAKE THE CUT ↓</span>
         </div>
       </div>
     </section>
@@ -374,12 +330,50 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [activeWhy, setActiveWhy] = useState(0);
+  const [navCompact, setNavCompact] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 1300);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const updateNav = () => setNavCompact(window.scrollY > 48);
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+    return () => window.removeEventListener('scroll', updateNav);
+  }, []);
+
+  useEffect(() => {
+    const sections = navigationItems
+      .map((item) => document.getElementById(item.section))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const current = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (current) setActiveSection(current.target.id);
+      },
+      { rootMargin: '-32% 0px -58%', threshold: [0, 0.15, 0.4] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [open]);
 
   const mouseX = useMotionValue(50);
   const mouseY = useMotionValue(50);
@@ -388,7 +382,6 @@ export default function Home() {
   const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroOpacity = useTransform(heroProgress, [0, 0.9], [1, 0.08]);
   const heroTextY = useTransform(heroProgress, [0, 1], [0, 100]);
-  const navItems = [['Audience', '#audience'], ['Formats', '#formats'], ['Proof', '#results'], ['Options', '#packages']];
 
   return (
     <main
@@ -421,36 +414,85 @@ export default function Home() {
       <motion.div className="ambientGlow" style={{ background: glow }} />
       <motion.div className="progress" style={{ scaleX: scrollYProgress }} />
 
-      <header className="nav">
-        <a className="brand" href="#top"><Image src="/logo.svg" width={90} height={40} alt="Today Film Makers" /></a>
-        <nav>
-          {navItems.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+      <header className={`nav${navCompact ? ' navCompact' : ''}${open ? ' navOpen' : ''}`}>
+        <a className="brand" href="#top" aria-label="Today Film Makers home">
+          <Image src="/logo.svg" width={86} height={38} alt="Today Film Makers" priority />
+          <span className="brandSignal">
+            <i />
+            <span>GLOBAL FILMMAKING<br />COMMUNITY</span>
+          </span>
+        </a>
+        <nav className="desktopNav" aria-label="Primary navigation">
+          {navigationItems.map((item) => (
+            <a
+              key={item.label}
+              className={activeSection === item.section ? 'navLink active' : 'navLink'}
+              href={item.href}
+            >
+              <span className="navNumber">{item.number}</span>
+              <span className="navLabel">
+                <span>{item.label}</span>
+                <span aria-hidden="true">{item.label}</span>
+              </span>
+            </a>
+          ))}
         </nav>
-        <MagneticLink className="navCta" href="/contact">Partner with us <ArrowUpRight size={15} /></MagneticLink>
-        <button className="menu" onClick={() => setOpen(!open)} aria-label="Menu">{open ? <X /> : <Menu />}</button>
+        <MagneticLink className="navCta" href="/contact">
+          <span>Start a campaign</span>
+          <i><ArrowUpRight size={15} /></i>
+        </MagneticLink>
+        <button
+          className="menu"
+          onClick={() => setOpen(!open)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+        >
+          <span>{open ? 'Close' : 'Menu'}</span>
+          <i>{open ? <X size={18} /> : <Menu size={18} />}</i>
+        </button>
       </header>
 
-      {open && (
-        <motion.div
-          className="mobileNav"
-          initial={{ clipPath: 'inset(0 0 100% 0)' }}
-          animate={{ clipPath: 'inset(0 0 0 0)' }}
-        >
-          {navItems.map(([label, href], index) => (
-            <motion.a
-              key={label}
-              href={href}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.06 }}
-              onClick={() => setOpen(false)}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="mobileNav"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.72, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <div className="mobileNavTop">
+              <span>PRIMARY NAVIGATION</span>
+              <span>TFM / BRAND DESK</span>
+            </div>
+            <div className="mobileNavLinks">
+              {navigationItems.map((item, index) => (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  initial={{ opacity: 0, y: 46 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.22 + index * 0.07, duration: 0.62, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={() => setOpen(false)}
+                >
+                  <span>{item.number}</span>
+                  <strong>{item.label}</strong>
+                  <ArrowUpRight />
+                </motion.a>
+              ))}
+            </div>
+            <motion.div
+              className="mobileNavFooter"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.55 }}
             >
-              <span>0{index + 1}</span>{label}<ArrowUpRight />
-            </motion.a>
-          ))}
-          <a href="/contact"><span>05</span>Contact<ArrowUpRight /></a>
-        </motion.div>
-      )}
+              <span><i /> OPEN TO CREATIVE PARTNERSHIPS</span>
+              <a href="/contact">Start a campaign <ArrowRight size={16} /></a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.section className="dealHero" id="top" ref={heroRef} style={{ opacity: heroOpacity }}>
         <div className="heroAtmosphere" aria-hidden="true">
@@ -508,8 +550,26 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <section className="brandTicker">
-        <div>CAMERAS <i>+</i> EDITING SOFTWARE <i>+</i> AI TOOLS <i>+</i> LIGHTING <i>+</i> AUDIO <i>+</i> CREATIVE TECHNOLOGY <i>+</i> CAMERAS <i>+</i> EDITING SOFTWARE <i>+</i> AI TOOLS <i>+</i></div>
+      <section className="brandTicker" aria-label="Filmmaking topics covered by Today Film Makers">
+        <div className="tickerMeta">
+          <span>THE CRAFT, IN MOTION</span>
+          <span>TOOLS / TECH / CULTURE</span>
+        </div>
+        <div className="tickerViewport">
+          <div className="tickerTrack">
+            {[0, 1].map((copy) => (
+              <div className="tickerGroup" key={copy} aria-hidden={copy === 1}>
+                {craftTopics.map((topic) => (
+                  <div className="tickerItem" key={`${copy}-${topic.title}`}>
+                    <b>{topic.title}</b>
+                    <em>{topic.note}</em>
+                    <i>+</i>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="audienceSection" id="audience">
