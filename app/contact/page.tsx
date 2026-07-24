@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, Check, Clock3, Mail, Send, ShieldCheck } from 'l
 import { FormEvent, useState } from 'react';
 
 const collaborationOptions = ['Promotional video share', 'Custom content creation', 'Product integration', 'Long-term sponsorship', 'Not sure yet'];
-const budgetOptions = ['Under $300', '$300–$600', '$600–$1,500', '$1,500+', 'Need a custom quote'];
+const budgetOptions = ['Under $500', '$500–$1,000', '$1,000–$2,500', '$2,500+', 'Need a custom quote'];
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
