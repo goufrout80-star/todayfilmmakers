@@ -5,9 +5,11 @@ A cinematic brand-partnership media kit for the Today Film Makers community. Bui
 ## Included
 
 - Text-only Apple-inspired hero with controlled cinematic motion
+- Fixed opening-credits navigation with active-section feedback and a full-screen mobile menu
+- Seamless editorial filmmaking craft rail
 - Audience metrics, demographic breakdown and platform distribution
 - Four-format campaign presentation
-- Motion-only Campaign Proof composer with story frames, edit timeline and waveform
+- Scroll-driven Campaign Proof sequence that transforms a wide idea into vertical impact
 - Interactive Why Partner experience
 - Cinematic partnership options with verified public rates
 - Scroll-driven campaign process timeline
