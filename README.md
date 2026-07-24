@@ -1,18 +1,15 @@
 # Today Film Makers
 
-A cinematic editorial platform for the Today Film Makers community. Built with Next.js, TypeScript and Framer Motion, and prepared for Vercel deployment.
+A cinematic brand-partnership media kit for the Today Film Makers filmmaking community. Built with Next.js, TypeScript and Framer Motion, and prepared for Vercel deployment.
 
 ## Included
 
-- Cinematic responsive homepage
-- Tutorial library
-- Creator directory
-- Gear and tools editorial page
-- Brand partnership page
-- Creator submission page
+- Cinematic responsive media-kit homepage
+- Audience metrics, demographic breakdown and platform distribution
+- Campaign formats, partnership packages and monthly campaign starting point
+- Brand partnership contact page with campaign brief form
 - Mobile navigation and scroll animation
-- SEO metadata, Open Graph image, robots.txt and sitemap
-- Production build verified with Next.js
+- Responsive layout prepared for Vercel deployment
 
 ## Run locally
 
@@ -33,8 +30,8 @@ Open `http://localhost:3000`.
 
 ## Content and forms
 
-Tutorials, creators and imagery are managed in `data/content.ts`. The inquiry and submission interfaces are currently front-end forms; connect them to Resend, Supabase or your preferred CRM before collecting production submissions.
+Audience figures, campaign formats and public rates are defined in `app/page.tsx`. The contact form prepares a complete campaign brief in the visitor's email client and sends it to `hello@todayfilmmakers.com`. Connect it to Resend, Supabase or a CRM when server-side lead capture is required.
 
 ## Image credits
 
-Demo photography is loaded from Unsplash and is used under the Unsplash License. Replace or expand the demo imagery with original Today Film Makers assets whenever available.
+The current visual treatment uses Unsplash photography under the Unsplash License. Replace these remote images with original Today Film Makers campaign assets when available so the media kit can show verified brand work.
