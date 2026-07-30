@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './contact/contact-enhancements.css';
 
 export const metadata: Metadata = {
   title: 'Today Film Makers — Brand Partnerships & Media Kit',
