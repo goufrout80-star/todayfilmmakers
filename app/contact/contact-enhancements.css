@@ -1,0 +1,146 @@
+/* Secure campaign intake additions */
+.formHoneypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.formFieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.formFieldset legend {
+  margin-bottom: 10px;
+  color: #a6a8af;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.formGrid .choiceCard {
+  min-height: 48px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  background: #0d0f14;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.formGrid .choiceCard:hover {
+  border-color: rgba(245, 201, 0, .5);
+  transform: translateY(-1px);
+}
+
+.choiceCard input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--yellow);
+}
+
+.formGrid .choiceCard > span {
+  color: #d7d8dc;
+  font-size: 10px;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.formConsent {
+  cursor: pointer;
+}
+
+.formConsent > input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--yellow);
+}
+
+.formConsent > svg {
+  display: none;
+}
+
+.campaignForm > button:disabled {
+  cursor: not-allowed;
+  opacity: .64;
+}
+
+.formStatus {
+  display: none;
+  margin-top: 17px;
+  padding: 14px 15px;
+  border: 1px solid transparent;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.formStatus.sending,
+.formStatus.error,
+.formStatus.success {
+  display: grid;
+  gap: 5px;
+}
+
+.formStatus.sending {
+  border-color: rgba(245, 201, 0, .24);
+  background: rgba(245, 201, 0, .06);
+  color: var(--yellow);
+}
+
+.formStatus.error {
+  border-color: rgba(255, 102, 102, .35);
+  background: rgba(255, 85, 85, .07);
+  color: #ff9f9f;
+}
+
+.formStatus.success {
+  border-color: rgba(116, 220, 166, .34);
+  background: rgba(91, 194, 139, .08);
+  color: #a9ebc7;
+}
+
+.formStatus strong {
+  font-size: 13px;
+  color: #fff;
+}
+
+.formStatus span {
+  width: max-content;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid currentColor;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+.formStatus p {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .choiceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formGrid .choiceCard {
+    min-height: 46px;
+  }
+}
