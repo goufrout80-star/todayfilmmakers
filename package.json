@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/apply-tfm-feedback.mjs && next dev",
+    "dev": "next dev",
     "prebuild": "node scripts/apply-tfm-feedback.mjs",
     "build": "next build",
     "start": "next start"
