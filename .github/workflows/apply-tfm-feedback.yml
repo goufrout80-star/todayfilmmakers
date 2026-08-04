@@ -48,3 +48,5 @@ jobs:
           fi
           git commit -m "Apply TFM website feedback [skip tfm-update]"
           git push origin apply-tfm-feedback
+
+# Triggered after the workflow became available on the branch.
