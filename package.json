@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/apply-tfm-feedback.mjs",
+    "prebuild": "node scripts/apply-tfm-feedback.mjs && node scripts/keep-exact-favicon.mjs",
     "build": "next build",
     "start": "next start"
   },
